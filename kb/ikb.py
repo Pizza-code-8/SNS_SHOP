@@ -52,21 +52,40 @@ def sub_ikb():
 
 #Стартовая ikb
 
+#def start_ikb():
+#
+#    ikb = [
+#        [
+#            InlineKeyboardButton(text="👤Профиль", callback_data="profile")
+#        ],
+#        [
+#            InlineKeyboardButton(text="🤝Поддержка", url="https://t.me/xxwwalter")
+#        ],
+#        [
+#            InlineKeyboardButton(text="🚀Условия реферальной системы", callback_data="ref_list")
+#        ],
+#        [
+#        InlineKeyboardButton(text="🛍Магазин", callback_data="shop"),
+#        InlineKeyboardButton(text="🛒Корзина", callback_data = "show_basket"),
+#        InlineKeyboardButton(text="🗂Мои заказы", callback_data = "show_orders")
+#        ]
+#    ]
+
 def start_ikb():
 
     ikb = [
         [
-            InlineKeyboardButton(text="👤Профиль", callback_data="profile")
+            InlineKeyboardButton(text="🛍Магазин", callback_data="shop")
         ],
         [
-            InlineKeyboardButton(text="🤝Поддержка", url="https://t.me/xxwwalter")
+            InlineKeyboardButton(text="🛒Корзина", callback_data = "show_basket")
         ],
         [
             InlineKeyboardButton(text="🚀Условия реферальной системы", callback_data="ref_list")
         ],
         [
-        InlineKeyboardButton(text="🛍Магазин", callback_data="shop"),
-        InlineKeyboardButton(text="🛒Корзина", callback_data = "show_basket"),
+        InlineKeyboardButton(text="👤Профиль", callback_data="profile"),
+        InlineKeyboardButton(text="🤝Поддержка", url="https://t.me/xxwwalter"),
         InlineKeyboardButton(text="🗂Мои заказы", callback_data = "show_orders")
         ]
     ]
@@ -84,17 +103,17 @@ def start_ikb_admin():
             InlineKeyboardButton(text="👑АДМИН-ПАНЕЛЬ👑", callback_data="admin_desk")
         ],
         [
-            InlineKeyboardButton(text="👤Профиль", callback_data="profile")
+            InlineKeyboardButton(text="🛍Магазин", callback_data="shop")
         ],
         [
-            InlineKeyboardButton(text="🤝Поддержка", url="https://t.me/xxwwalter")
+            InlineKeyboardButton(text="🛒Корзина", callback_data = "show_basket")
         ],
         [
             InlineKeyboardButton(text="🚀Условия реферальной системы", callback_data="ref_list")
         ],
         [
-        InlineKeyboardButton(text="🛍Магазин", callback_data="shop"),
-        InlineKeyboardButton(text="🛒Корзина", callback_data = "show_basket"),
+        InlineKeyboardButton(text="👤Профиль", callback_data="profile"),
+        InlineKeyboardButton(text="🤝Поддержка", url="https://t.me/xxwwalter"),
         InlineKeyboardButton(text="🗂Мои заказы", callback_data = "show_orders")
         ]
     ]
