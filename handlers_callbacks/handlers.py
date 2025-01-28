@@ -25,6 +25,13 @@ async def start(message: Message, command: CommandObject):
     disc_1 = 0.05
     dics_2 = 0.1
     disc_3 = 0.2
+    if check_user(message.from_user.id) == True:
+        if take_referals(message.from_user.id) >= 250:
+            add_discount(message.from_user.id, disc_3)
+        elif take_referals(message.from_user.id) >= 50:
+            add_discount(message.from_user.id, dics_2)
+        elif take_referals(message.from_user.id) >= 5:
+            add_discount(message.from_user.id, disc_1)
     link = await create_start_link(bot, str(message.from_user.id), encode=True)
     payload = command.args
     ref_id = decode_payload(payload) if payload else None
@@ -76,6 +83,12 @@ async def start(message: Message, command: CommandObject):
                 reply_markup = start_ikb(),
                 parse_mode = ParseMode.HTML
             )
+
+@router.message(Command("profile"))
+async def cmd_profile(message: Message):
+    disc_1 = 0.05
+    dics_2 = 0.1
+    disc_3 = 0.2
     if check_user(message.from_user.id) == True:
         if take_referals(message.from_user.id) >= 250:
             add_discount(message.from_user.id, disc_3)
@@ -83,12 +96,6 @@ async def start(message: Message, command: CommandObject):
             add_discount(message.from_user.id, dics_2)
         elif take_referals(message.from_user.id) >= 5:
             add_discount(message.from_user.id, disc_1)
-
-@router.message(Command("profile"))
-async def cmd_profile(message: Message):
-    disc_1 = 0.05
-    dics_2 = 0.1
-    disc_3 = 0.2
     user = await bot.get_chat_member(chat_id=-1002305724083, user_id=message.from_user.id)
     if user.status == "left":
         await message.answer(
@@ -108,13 +115,6 @@ async def cmd_profile(message: Message):
                 parse_mode = ParseMode.HTML,
                 reply_markup=basket_btn()
             )
-    if check_user(message.from_user.id) == True:
-        if take_referals(message.from_user.id) >= 250:
-            add_discount(message.from_user.id, disc_3)
-        elif take_referals(message.from_user.id) >= 50:
-            add_discount(message.from_user.id, dics_2)
-        elif take_referals(message.from_user.id) >= 5:
-            add_discount(message.from_user.id, disc_1)
 
 @router.message(Command("ref"))
 async def cnd_ref(message: Message):
