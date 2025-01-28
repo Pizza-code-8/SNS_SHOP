@@ -57,7 +57,8 @@ async def start(message: Message, command: CommandObject):
                     f"🥳Вы зашли по реферальной ссылке <code>@{take_username(str(ref_id))}</code>",
                     parse_mode=ParseMode.HTML
                     )
-                add_user(user_id=message.from_user.id, username=message.from_user.username, user_name=message.from_user.full_name, ref_link=link)
+                add_user(user_id=message.from_user.id, user_name=message.from_user.full_name, ref_link=link)
+                add_username_by_id(user_id=message.from_user.id, username=message.from_user.username)
                 add_stat_ref(message.from_user.id, str(ref_id))
             await message.answer(
                 f"❗️Что бы использовать бота необходимо подписаться на наш канал: https://t.me/snyspavlodar",
@@ -70,10 +71,12 @@ async def start(message: Message, command: CommandObject):
                         f"🥳Вы зашли по реферальной ссылке <code>@{take_username(str(ref_id))}</code>",
                         parse_mode=ParseMode.HTML
                         )
-                    add_user(user_id=message.from_user.id, username=message.from_user.username, user_name=message.from_user.full_name, ref_link=link)
+                    add_user(user_id=message.from_user.id, user_name=message.from_user.full_name, ref_link=link)
+                    add_username_by_id(user_id=message.from_user.id, username=message.from_user.username)
                     add_stat_ref(message.from_user.id, str(ref_id))
                 else:
-                    add_user(user_id=message.from_user.id, username=message.from_user.username, user_name=message.from_user.full_name, ref_link=link)
+                    add_user(user_id=message.from_user.id, user_name=message.from_user.full_name, ref_link=link)
+                    add_username_by_id(user_id=message.from_user.id, username=message.from_user.username)
             await message.answer(
                 f"Привет <b>{message.from_user.full_name}</b>👋",
                 reply_markup=main_menu_kb(),
