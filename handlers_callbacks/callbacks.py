@@ -156,7 +156,7 @@ async def choose_category(callback: CallbackQuery, callback_data: MgFactory_clie
     mg_stuff[callback.from_user.id] = await state.get_data()
     try:
         id = take_stuff_id_from_stuff_by_name_mg(name, mg)
-        for_send = FSInputFile(f"/home/sns/SNS_SHOP/category_photo/{id}.jpg")
+        for_send = FSInputFile(f"C:\\Users\\user\\Desktop\\projects\\local\\snus_shop\\category_photo\\{id}.jpg")
         await bot.send_photo(
             chat_id=callback.from_user.id,
             photo=for_send,
@@ -179,7 +179,7 @@ async def categories(callback: CallbackQuery, callback_data: StuffFactory_client
     id = take_stuff_id_from_stuff(num)
     await state.update_data(s_id = str(id))
     stuff_id[callback.from_user.id] = await state.get_data()
-    for_send = FSInputFile(f"/home/sns/SNS_SHOP/category_photo/{id}.jpg", filename=f"{id}.jpg")
+    for_send = FSInputFile(f"C:\\Users\\user\\Desktop\\projects\\local\\snus_shop\\category_photo\\{id}.jpg", filename=f"{id}.jpg")
     await callback.message.edit_media(
         InputMediaPhoto(
             media=for_send,
@@ -271,10 +271,7 @@ async def do_order(callback: CallbackQuery, state: FSMContext):
     uid = callback.from_user.id
     close= datetime.time(23,30,00)
     open = datetime.time(11,00,00)
-    offset = datetime.timedelta(hours=4)
-    tz = datetime.timezone(offset, name='КЗ')
-    t_now = datetime.datetime.now(tz=tz).time()
-    if open < t_now < close:
+    if open < datetime.datetime.now().time() < close:
         if take_basket(uid) != None:
             await callback.message.answer(
                 "Введите адрес для доставки"
@@ -286,7 +283,7 @@ async def do_order(callback: CallbackQuery, state: FSMContext):
             )
     else:
         await callback.message.answer(
-            f"Доставка работает с <b>11:00-23:30</b>",
+            "Доставка работает с <b>11:00-23:30</b>",
             parse_mode=ParseMode.HTML
         )
 
@@ -600,7 +597,7 @@ async def add_portions(message: Message, state: FSMContext):
 async def add_mg_for_stuff(message: Message, state: FSMContext):
     id = stuff_id[message.from_user.id]["stuff_id"]
     photo = message.photo[-1]
-    await message.bot.download(file=photo, destination=f"/home/sns/SNS_SHOP/category_photo/{id}.jpg")
+    await message.bot.download(file=photo, destination=f"C:\\Users\\user\\Desktop\\projects\\local\\snus_shop\\category_photo\\{id}.jpg")
     await message.answer(
         "Позиция успешно добавлена✅"
     )
@@ -643,7 +640,7 @@ async def categories(callback: CallbackQuery, callback_data: StuffFactory, state
     mg = mg_stuff[callback.from_user.id]["mg"]
     name = str(take_cat_name_from_stuff(num))
     id = take_stuff_id_from_stuff(num)
-    for_send = FSInputFile(f"/home/sns/SNS_SHOP/category_photo/{id}.jpg", filename=f"{id}.jpg")
+    for_send = FSInputFile(f"C:\\Users\\user\\Desktop\\projects\\local\\snus_shop\\category_photo\\{id}.jpg", filename=f"{id}.jpg")
     if callback.from_user.id == admin_id:
         await callback.message.edit_media(
             InputMediaPhoto(
@@ -752,7 +749,7 @@ async def choose_category(callback: CallbackQuery, callback_data: MgFactory, sta
     cat_name[callback.from_user.id] = await state.get_data()
     try:
         id = take_stuff_id_from_stuff_by_name_mg(name, mg)
-        for_send = FSInputFile(f"/home/sns/SNS_SHOP/category_photo/{id}.jpg")
+        for_send = FSInputFile(f"C:\\Users\\user\\Desktop\\projects\\local\\snus_shop\\category_photo\\{id}.jpg")
         await bot.send_photo(
             chat_id=callback.from_user.id,
             photo=for_send,
