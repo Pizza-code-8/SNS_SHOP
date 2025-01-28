@@ -271,7 +271,6 @@ async def do_order(callback: CallbackQuery, state: FSMContext):
     uid = callback.from_user.id
     close= datetime.time(23,30,00)
     open = datetime.time(11,00,00)
-    print(datetime.datetime.now().time())
     if open < datetime.datetime.now().time() < close:
         if take_basket(uid) != None:
             await callback.message.answer(
@@ -284,7 +283,7 @@ async def do_order(callback: CallbackQuery, state: FSMContext):
             )
     else:
         await callback.message.answer(
-            "Доставка работает с <b>11:00-23:30</b>",
+            f"Доставка работает с <b>11:00-23:30</b>\n\nСейчас время {print(datetime.datetime.now().time())}",
             parse_mode=ParseMode.HTML
         )
 
