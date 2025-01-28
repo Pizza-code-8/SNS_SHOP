@@ -154,10 +154,11 @@ async def choose_category(callback: CallbackQuery, callback_data: MgFactory_clie
     name = take_cat_name_from_stuff_by_mg(c_name, mg)
     await state.update_data(mg = callback_data.mg)
     mg_stuff[callback.from_user.id] = await state.get_data()
-    path_to_f = f"/home/sns/SNS_SHOP/{id}.jpg"
     try:
         id = take_stuff_id_from_stuff_by_name_mg(name, mg)
-        for_send = FSInputFile(path=path_to_f, filename=f"{id}.jpg")
+        path_to_f = f"/home/sns/SNS_SHOP/{id}.jpg"
+        name = f"{id}.jpg"
+        for_send = FSInputFile(path=path_to_f, filename=name)
         await bot.send_photo(
             chat_id=callback.from_user.id,
             photo=for_send,
