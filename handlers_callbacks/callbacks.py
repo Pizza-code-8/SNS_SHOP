@@ -16,7 +16,7 @@ from bot import bot
 from admin.admin_id import admin_id
 from kb.ikb import sub_ikb, start_ikb, admin_ikb, add_category_ikb, add_stuff, market_category_ikb, market_stuff, make_order, orders_ikb, work_orders, order_btn, basket_btn, mg_ikb, mg_ikb_market, back_btn, orders_from_user_ikb, back_btn_menu, CategoryFactory, StuffFactory, CategoryFactory_client, StuffFactory_client, Orders, MgFactory, MgFactory_client, User_Orders, Order_finish, Order_finish_1
 from kb.kb import main_menu_kb
-from db.sns_users import take_ref_link, take_referals, take_stat_ref, take_discount, add_basket, take_basket, take_user_id, take_username, clean_basket, take_id_orders, add_orders_in_users, add_user, check_user, take_order_check, add_order_check, add_referals_username
+from db.sns_users import take_ref_link, take_referals, take_stat_ref, take_discount, add_basket, take_basket, take_user_id, take_username, clean_basket, take_id_orders, add_orders_in_users, add_user, check_user, take_order_check, add_order_check, add_referals
 from db.category import add_num_category, add_name_in_category, add_price_in_category, take_all_category, delete_category, add_weight_category, add_portions_category, take_name_category_from_category, take_price_from_category_by_name, take_weight_from_category_by_name, take_portions_from_category_by_name
 from db.stuff import add_name_in_stuff, add_category_name_in_stuff, add_num_in_stuff, take_stuff_id_from_stuff, delete_stuff, take_cat_name_from_stuff, add_in_stock_in_stuff, take_in_stock_from_stuff, take_all_stuff_id_from_stuff, take_cat_name_from_stuff_by_id, take_stuff_name_from_stuff, add_in_stock_in_stuff_by_id, add_mg_in_stuff_by_num, take_mg_by_name_by_mg, take_cat_name_from_stuff_by_mg, take_stuff_name_from_stuff_by_mg, take_stuff_id_from_stuff_by_name_mg
 from db.orders import add_user_id_orders, add_adress_in_orders, add_basket_in_orders, add_sum_in_orders, take_adress_from_orders, take_sum_from_orders, take_username_from_orders, take_basket_from_orders, clean_order, add_phone_in_orders, take_phone_from_orders, take_stat_from_orders, add_stat_in_orders, take_time_of_order, take_username_from_orders_by_uid
@@ -271,7 +271,10 @@ async def do_order(callback: CallbackQuery, state: FSMContext):
     uid = callback.from_user.id
     close= datetime.time(23,30,00)
     open = datetime.time(11,00,00)
-    if open < datetime.datetime.now().time() < close:
+    offset = datetime.timedelta(hours=4)
+    tz = datetime.timezone(offset, name='МСК')
+    t_now = datetime.datetime.now(tz=tz).time()
+    if open < t_now < close:
         if take_basket(uid) != None:
             await callback.message.answer(
                 "Введите адрес для доставки"
@@ -305,7 +308,7 @@ async def address_order(message: Message, state: FSMContext):
     if take_stat_ref(uid) != "None":
         if take_order_check(uid) == "None":
             add_order_check(uid, "+")
-            add_referals_username(take_username(take_stat_ref(uid)))
+            add_referals(take_stat_ref(uid))
     username = message.from_user.username
     phone_num = message.text
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
