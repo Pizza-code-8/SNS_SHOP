@@ -16,7 +16,7 @@ def check_user(user_id):
 #_________________________________________________________________________________#
     
 #Добавление юзера в бд
-def add_user(user_id: int, user_name: str, ref_link: str):
+def add_user(user_id: int, user_name: str, ref_link: str): 
     cur.execute(f"INSERT INTO users (user_id, user_name, referal_link) VALUES (?, ?, ?)", (user_id, user_name, ref_link))
     conn.commit()
 
