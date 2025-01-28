@@ -16,8 +16,13 @@ def check_user(user_id):
 #_________________________________________________________________________________#
     
 #Добавление юзера в бд
-def add_user(user_id: int, username: str, user_name: str, ref_link: str):
-    cur.execute(f"INSERT INTO users (user_id, username, user_name, referal_link) VALUES (?, ?, ?, ?)", (user_id, username, user_name, ref_link))
+def add_user(user_id: int, user_name: str, ref_link: str):
+    cur.execute(f"INSERT INTO users (user_id, user_name, referal_link) VALUES (?, ?, ?)", (user_id, user_name, ref_link))
+    conn.commit()
+
+#Добавить юзернейм
+def add_username_by_id(user_id, username):
+    cur.execute(f"UPDATE users SET username = {username} WHERE user_id = {user_id}")
     conn.commit()
 
 #Добавление stat_ref
