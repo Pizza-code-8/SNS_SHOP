@@ -16,7 +16,7 @@ from bot import bot
 from admin.admin_id import admin_id
 from kb.ikb import sub_ikb, start_ikb, admin_ikb, add_category_ikb, add_stuff, market_category_ikb, market_stuff, make_order, orders_ikb, work_orders, order_btn, basket_btn, mg_ikb, mg_ikb_market, back_btn, orders_from_user_ikb, back_btn_menu, CategoryFactory, StuffFactory, CategoryFactory_client, StuffFactory_client, Orders, MgFactory, MgFactory_client, User_Orders, Order_finish, Order_finish_1
 from kb.kb import main_menu_kb
-from db.sns_users import take_ref_link, take_referals, take_stat_ref, take_discount, add_basket, take_basket, take_user_id, take_username, clean_basket, take_id_orders, add_orders_in_users, add_user, check_user, take_order_check, add_order_check, add_referals
+from db.sns_users import take_ref_link, take_referals, take_stat_ref, take_discount, add_basket, take_basket, take_user_id, take_username, clean_basket, take_id_orders, add_orders_in_users, add_user, check_user, take_order_check, add_order_check, add_referals, add_username_by_id
 from db.category import add_num_category, add_name_in_category, add_price_in_category, take_all_category, delete_category, add_weight_category, add_portions_category, take_name_category_from_category, take_price_from_category_by_name, take_weight_from_category_by_name, take_portions_from_category_by_name
 from db.stuff import add_name_in_stuff, add_category_name_in_stuff, add_num_in_stuff, take_stuff_id_from_stuff, delete_stuff, take_cat_name_from_stuff, add_in_stock_in_stuff, take_in_stock_from_stuff, take_all_stuff_id_from_stuff, take_cat_name_from_stuff_by_id, take_stuff_name_from_stuff, add_in_stock_in_stuff_by_id, add_mg_in_stuff_by_num, take_mg_by_name_by_mg, take_cat_name_from_stuff_by_mg, take_stuff_name_from_stuff_by_mg, take_stuff_id_from_stuff_by_name_mg
 from db.orders import add_user_id_orders, add_adress_in_orders, add_basket_in_orders, add_sum_in_orders, take_adress_from_orders, take_sum_from_orders, take_username_from_orders, take_basket_from_orders, clean_order, add_phone_in_orders, take_phone_from_orders, take_stat_from_orders, add_stat_in_orders, take_time_of_order, take_username_from_orders_by_uid
@@ -63,7 +63,8 @@ async def i_sub(callback: CallbackQuery):
     else:
         link = await create_start_link(bot, str(callback.from_user.id), encode=True)
         if check_user(callback.from_user.id) == False:
-            add_user(user_id=callback.from_user.id, username=callback.from_user.username, user_name=callback.from_user.full_name, ref_link=link)
+            add_user(user_id=callback.from_user.id, user_name=callback.from_user.full_name, ref_link=link)
+            add_username_by_id(user_id=callback.from_user.id, username=callback.from_user.username)
         await callback.message.answer(
             f"Привет <b>{callback.from_user.full_name}</b>👋",
             reply_markup=main_menu_kb(),
