@@ -11,7 +11,7 @@ from aiogram.utils.deep_linking import create_start_link, decode_payload
 from bot import bot
 from kb.kb import main_menu_kb
 from kb.ikb import sub_ikb, start_ikb, start_ikb_admin, basket_btn, back_btn_menu, market_category_ikb, make_order
-from db.sns_users import check_user, add_user, take_username, add_stat_ref, add_referals, add_discount, take_referals, take_discount, take_stat_ref, take_ref_link, take_basket, take_id_orders
+from db.sns_users import check_user, add_user, take_username, add_stat_ref, add_referals, add_discount, take_referals, take_discount, take_stat_ref, take_ref_link, take_basket, take_id_orders, add_username_by_id
 from db.stuff import take_cat_name_from_stuff_by_id, take_stuff_name_from_stuff
 from db.category import take_price_from_category_by_name
 from db.orders import take_time_of_order, take_basket_from_orders, take_sum_from_orders, take_stat_from_orders, take_adress_from_orders
@@ -37,7 +37,8 @@ async def start(message: Message, command: CommandObject):
     ref_id = decode_payload(payload) if payload else None
     if message.from_user.id == admin_id:
         if check_user(message.from_user.id) == False:
-                add_user(user_id=message.from_user.id, username=message.from_user.username, user_name=message.from_user.full_name, ref_link=link)
+                add_user(user_id=message.from_user.id, user_name=message.from_user.full_name, ref_link=link)
+                add_username_by_id(user_id=message.from_user.id, username=message.from_user.username)
         await message.answer(
             f"<b>{message.from_user.full_name}</b>, привет!",
             reply_markup=main_menu_kb(),
