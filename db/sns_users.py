@@ -22,7 +22,7 @@ def add_user(user_id: int, user_name: str, ref_link: str):
 
 #Добавить юзернейм
 def add_username_by_id(user_id, username):
-    cur.execute(f"UPDATE users SET username = {username} WHERE user_id = {user_id}")
+    cur.execute(f"UPDATE users SET username = '{username}' WHERE user_id = {user_id}")
     conn.commit()
 
 #Добавление stat_ref
