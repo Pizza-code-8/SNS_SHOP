@@ -270,9 +270,9 @@ async def clean_basket_user(callback: CallbackQuery):
 @router.callback_query(F.data == "make_order")
 async def do_order(callback: CallbackQuery, state: FSMContext):
     uid = callback.from_user.id
-    close= datetime.time(23,30,00)
+    close= datetime.time(23,00,00)
     open = datetime.time(11,00,00)
-    offset = datetime.timedelta(hours=4)
+    offset = datetime.timedelta(hours=5)
     tz = datetime.timezone(offset, name='МСК')
     t_now = datetime.datetime.now(tz=tz).time()
     if open < t_now < close:
