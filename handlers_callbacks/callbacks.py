@@ -312,7 +312,9 @@ async def address_order(message: Message, state: FSMContext):
             add_referals(take_stat_ref(uid))
     username = message.from_user.username
     phone_num = message.text
-    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    offset = datetime.timedelta(hours=5)
+    tz = datetime.timezone(offset, name='МСК')
+    now = datetime.datetime.now(tz=tz).strftime("%Y-%m-%d %H:%M:%S")
     basket = take_basket(uid)
     print(basket)
     price = order_price[message.from_user.id]["price"]
