@@ -32,6 +32,9 @@ class Order_finish(CallbackData, prefix="finish"):
 class Order_finish_1(CallbackData, prefix="finish_1"):
     id: str
 
+class Axcept_Order(CallbackData, prefix="axcept"):
+    id: str
+
 from db.category import take_all_category, take_name_category_from_category, take_price_from_category
 from db.stuff import take_all_stuff, take_name_from_stuff, take_all_stuff_id_from_stuff, take_num_from_stuff_by_stuff_id, take_stuff_name_from_stuff, take_mg_from_stuff_by_id, take_all_stuff_id_from_stuff_by_mg
 from db.orders import take_all_orders, take_username_from_orders_by_uid, take_all_orders_by_user_id, take_username_from_orders
@@ -379,6 +382,9 @@ def orders_ikb():
 def work_orders(order_id):
 
     ikb = [
+        [
+            InlineKeyboardButton(text="Принять заказ✅", callback_data=Axcept_Order(id = order_id).pack())
+        ], 
         [
             InlineKeyboardButton(text="Начал досталвять✅", callback_data=Order_finish_1(id = order_id).pack())
         ],
