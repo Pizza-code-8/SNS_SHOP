@@ -14,7 +14,7 @@ from aiogram.enums.parse_mode import ParseMode
 
 from bot import bot
 from admin.admin_id import admin_id
-from kb.ikb import sub_ikb, start_ikb, admin_ikb, add_category_ikb, add_stuff, market_category_ikb, market_stuff, make_order, orders_ikb, work_orders, order_btn, basket_btn, mg_ikb, mg_ikb_market, back_btn, orders_from_user_ikb, back_btn_menu, CategoryFactory, StuffFactory, CategoryFactory_client, StuffFactory_client, Orders, MgFactory, MgFactory_client, User_Orders, Order_finish, Order_finish_1
+from kb.ikb import sub_ikb, start_ikb, admin_ikb, add_category_ikb, add_stuff, market_category_ikb, market_stuff, make_order, orders_ikb, work_orders, order_btn, basket_btn, mg_ikb, mg_ikb_market, back_btn, orders_from_user_ikb, back_btn_menu, CategoryFactory, StuffFactory, CategoryFactory_client, StuffFactory_client, Orders, MgFactory, MgFactory_client, User_Orders, Order_finish, Order_finish_1, Axcept_Order
 from kb.kb import main_menu_kb
 from db.sns_users import take_ref_link, take_referals, take_stat_ref, take_discount, add_basket, take_basket, take_user_id, take_username, clean_basket, take_id_orders, add_orders_in_users, add_user, check_user, take_order_check, add_order_check, add_referals, add_username_by_id
 from db.category import add_num_category, add_name_in_category, add_price_in_category, take_all_category, delete_category, add_weight_category, add_portions_category, take_name_category_from_category, take_price_from_category_by_name, take_weight_from_category_by_name, take_portions_from_category_by_name
@@ -704,6 +704,22 @@ async def show_user_orders(callback: CallbackQuery, callback_data: User_Orders):
         reply_markup=work_orders(order_id)
     )
 
+@router.callback_query(Axcept_Order.filter())
+async def axcept_order(callback: CallbackQuery, callback_data: Axcept_Order):
+    order_id = callback_data.id
+    user_id = user_id_for_order[callback.from_user.id]["id"]
+    add_stat_in_orders(order_id, "Принят")
+    await bot.send_message(
+        chat_id=user_id,
+        text=f"<b>Ваш заказ принят</b>\n\n🗣<b>А пока поделитесь ссылкой с друзьями:</b> <code>{take_ref_link(user_id)}</code>",
+        parse_mode=ParseMode.HTML
+    )
+    await callback.message.edit_text(
+        f"Вы сменили статус заказа на <b>'Принят'</b>\n\nID заказа: <code>{order_id}</code>\n\nЗаказчик: <code>{take_username_from_orders_by_uid(user_id)}</code>\n\nВремя заказа: <code>{take_time_of_order(order_id)}</code>",
+        parse_mode = ParseMode.HTML,
+        reply_markup = order_btn()
+    )
+
 
 @router.callback_query(Order_finish_1.filter())
 async def finish_ord(callback: CallbackQuery, callback_data: Order_finish_1):
@@ -716,7 +732,7 @@ async def finish_ord(callback: CallbackQuery, callback_data: Order_finish_1):
         parse_mode=ParseMode.HTML
     )
     await callback.message.edit_text(
-        f"Вы сменили статус заказа\n\nID заказа: <code>{order_id}</code>\n\nЗаказчик: <code>{take_username_from_orders_by_uid(user_id)}</code>\n\nВремя заказа: <code>{take_time_of_order(order_id)}</code>",
+        f"Вы сменили статус заказа на <b>'Курьер в пути'</b>\n\nID заказа: <code>{order_id}</code>\n\nЗаказчик: <code>{take_username_from_orders_by_uid(user_id)}</code>\n\nВремя заказа: <code>{take_time_of_order(order_id)}</code>",
         parse_mode = ParseMode.HTML,
         reply_markup = order_btn()
     )
