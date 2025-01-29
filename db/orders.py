@@ -16,8 +16,13 @@ def check_user_in_orders(user_id):
 #_________________________________________________________________________________#
 
 #Добавить user_id + username покупателя
-def add_user_id_orders(user_id: int, username: str, order_id: str, time: str):
-    cur.execute(f"INSERT INTO orders (user_id, username, order_id, time) VALUES (?, ?, ?, ?)", (user_id, username, order_id, time))
+def add_user_id_orders(user_id: int, order_id: str, time: str):
+    cur.execute(f"INSERT INTO orders (user_id, order_id, time) VALUES (?, ?, ?)", (user_id, order_id, time))
+    conn.commit()
+
+#Добавить юзернейм
+def add_username_in_orders(user_id, u_name):
+    cur.execute(f"UPDATE orders SET username = '{u_name}' WHERE user_id = {user_id}")
     conn.commit()
 
 #Добавить корзину пользователя
